@@ -43,22 +43,38 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            InkWell(
-              child: Container(
-                color: Colors.blue,
-                width: MediaQuery.of(context).size.width/3,
-                height: MediaQuery.of(context).size.height/8,
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height/3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width/3,
+                      height: MediaQuery.of(context).size.height/8,
+                      decoration: BoxDecoration(
+                          borderRadius: new BorderRadius.circular(10.0),
+                          color: Colors.blue,
+                      ),
+                    ),
+                    onTap: blink,
+                  ),
+                  InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width/3,
+                      height: MediaQuery.of(context).size.height/8,
+                      decoration: BoxDecoration(
+                        borderRadius: new BorderRadius.circular(10.0),
+                        color: Colors.red,
+                      ),
+                    ),
+                    onTap: endBlink,
+                  ),
+                ],
               ),
-              onTap: blink,
             ),
-            InkWell(
-              child: Container(
-                color: Colors.red,
-                width: MediaQuery.of(context).size.width/3,
-                height: MediaQuery.of(context).size.height/8,
-              ),
-              onTap: endBlink,
-            ),
+
             Text(risposta),
           ],
         ),
