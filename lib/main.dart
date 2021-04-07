@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String risposta= "";
+  String risposta = "";
 
   @override
   Widget build(BuildContext context) {
@@ -45,25 +45,25 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height/3,
+              height: MediaQuery.of(context).size.height / 3,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   InkWell(
                     child: Container(
-                      width: MediaQuery.of(context).size.width/3,
-                      height: MediaQuery.of(context).size.height/8,
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: MediaQuery.of(context).size.height / 8,
                       decoration: BoxDecoration(
-                          borderRadius: new BorderRadius.circular(10.0),
-                          color: Colors.blue,
+                        borderRadius: new BorderRadius.circular(10.0),
+                        color: Colors.blue,
                       ),
                     ),
                     onTap: blink,
                   ),
                   InkWell(
                     child: Container(
-                      width: MediaQuery.of(context).size.width/3,
-                      height: MediaQuery.of(context).size.height/8,
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: MediaQuery.of(context).size.height / 8,
                       decoration: BoxDecoration(
                         borderRadius: new BorderRadius.circular(10.0),
                         color: Colors.red,
@@ -74,7 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-
             Text(risposta),
           ],
         ),
@@ -82,37 +81,30 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<bool> blink() async
-  {
-    final url = Uri.http("192.168.1.120:8889","/blink");
+  Future<bool> blink() async {
+    final url = Uri.http("192.168.1.120:8889", "/blink");
     final response = await http.get(url);
-    if (response.statusCode == 200)
-    {
+    if (response.statusCode == 200) {
       setState(() {
-        risposta=response.body;
+        risposta = response.body;
       });
-    }
-    else
-    {
+    } else {
       setState(() {
-        risposta="Errore: "+response.body;
+        risposta = "Errore: " + response.body;
       });
     }
   }
-  Future<bool> endBlink() async
-  {
-    final url = Uri.http("192.168.1.120:8889","/endblink");
+
+  Future<bool> endBlink() async {
+    final url = Uri.http("192.168.1.120:8889", "/endblink");
     final response = await http.get(url);
-    if (response.statusCode == 200)
-    {
+    if (response.statusCode == 200) {
       setState(() {
-        risposta=response.body;
+        risposta = response.body;
       });
-    }
-    else
-    {
+    } else {
       setState(() {
-        risposta="Errore: "+response.body;
+        risposta = "Errore: " + response.body;
       });
     }
   }
