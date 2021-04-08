@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -16,6 +18,7 @@ class HomePage extends StatefulWidget {
 class _MyHomePageState extends State<HomePage> {
   String risposta = "";
   double ledValue = 0;
+  final WebSocketChannel channel = IOWebSocketChannel.connect('ws://192.168.1.120:8080');
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +69,10 @@ class _MyHomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(8.0),
                           child: FittedBox(
                               child: Text(
-                            "Stop",
-                            style: new TextStyle(color: Colors.black),
-                          )),
+                                "Stop",
+                                style: new TextStyle(color: Colors.black),
+                              )
+                          ),
                         ),
                       ),
                       onTap: endBlink,
@@ -88,7 +92,14 @@ class _MyHomePageState extends State<HomePage> {
                     });
                   }),
               Text(risposta),
-            ],
+              StreamBuilder(
+                stream: channel.stream,
+                builder: (context, snapshot) {
+                  return Text(snapshot.hasData ? '${snapshot.data}' : '');
+                },
+              )
+
+        ],
           ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
