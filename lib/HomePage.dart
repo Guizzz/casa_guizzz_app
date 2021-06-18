@@ -18,6 +18,7 @@ class HomePage extends StatefulWidget {
 class _MyHomePageState extends State<HomePage> {
   String risposta = "";
   double ledValue = 0;
+  String lightValue;
   final WebSocketChannel channel = IOWebSocketChannel.connect('ws://192.168.1.120:8080');
 
   @override
@@ -28,7 +29,7 @@ class _MyHomePageState extends State<HomePage> {
       ),
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height / 2,
+          height: MediaQuery.of(context).size.height / 1.5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -95,9 +96,36 @@ class _MyHomePageState extends State<HomePage> {
               StreamBuilder(
                 stream: channel.stream,
                 builder: (context, snapshot) {
-                  return Text(snapshot.hasData ? '${snapshot.data}' : '');
+                  return InkWell(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: MediaQuery.of(context).size.height / 9,
+                      decoration: BoxDecoration(
+                          borderRadius: new BorderRadius.circular(10.0),
+                          color: Colors.white,
+                          boxShadow: [Decorations.shadow()]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FittedBox(
+                            child: Text(
+                              snapshot.data.toString(),
+                              style: new TextStyle(color: Colors.black),
+                            )
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      lightValue = snapshot.data.toString();
+                      if(lightValue == "1")
+                        channel.sink.add("0");
+                      else
+                        channel.sink.add("1");
+                    },
+                  );
                 },
               )
+
+
 
         ],
           ),
